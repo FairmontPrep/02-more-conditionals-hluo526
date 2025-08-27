@@ -1,0 +1,60 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: AwardQualifier Test
+      id: awardqualifier-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: AwardQualifier Test
+        setup-command: mvn compile
+        command: mvn -Dtest=AwardQualifierTest test
+        timeout: 3
+        max-score: 5
+    - name: CanRideExtremeCoaster Test
+      id: canrideextremecoaster-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: CanRideExtremeCoaster Test
+        setup-command: mvn compile
+        command: mvn -Dtest=CanRideExtremeCoasterTest test
+        timeout: 3
+        max-score: 5
+    - name: CanRideFamilyRiver Test
+      id: canridefamilyriver-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: CanRideFamilyRiver Test
+        setup-command: mvn compile
+        command: mvn -Dtest=CanRideFamilyRiverTest test
+        timeout: 3
+        max-score: 5
+    - name: CanRideKiddieCarousel Test
+      id: canridekiddiecarousel-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: CanRideKiddieCarousel Test
+        setup-command: mvn compile
+        command: mvn -Dtest=CanRideKiddieCarouselTest test
+        timeout: 3
+        max-score: 5
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        AWARDQUALIFIER-TEST_RESULTS: "${{steps.awardqualifier-test.outputs.result}}"
+        CANRIDEEXTREMECOASTER-TEST_RESULTS: "${{steps.canrideextremecoaster-test.outputs.result}}"
+        CANRIDEFAMILYRIVER-TEST_RESULTS: "${{steps.canridefamilyriver-test.outputs.result}}"
+        CANRIDEKIDDIECAROUSEL-TEST_RESULTS: "${{steps.canridekiddiecarousel-test.outputs.result}}"
+      with:
+        runners: awardqualifier-test,canrideextremecoaster-test,canridefamilyriver-test,canridekiddiecarousel-test
