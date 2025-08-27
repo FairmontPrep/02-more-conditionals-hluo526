@@ -27,24 +27,24 @@
 public class HonorRoll {
     public static void main(String[] args) {
         // Sample test cases (you can add more if needed)
-    double[] gpas =       {4.0, 3.6, 3.5, 3.4};
-    int[] tardies =       {2,   3,   1,   0};
-    int[] detentions =    {0,   0,   1,   1};
-    String[] expects = {
-        "Honor Roll",
-        "Merit List",
-        "No List",
-        "Merit List"
-    };
+        double[] gpas =       {4.0, 3.6, 3.5, 3.4};
+        int[] tardies =       {2,   3,   1,   0};
+        int[] detentions =    {0,   0,   1,   1};
+        String[] expects = {
+            "Honor Roll",
+            "Merit List",
+            "No List",
+            "Merit List"
+        };
 
-    for (int i = 0; i < gpas.length; i++) {
-        String received = HonorRoll.awardQualifier(gpas[i], tardies[i], detentions[i]);
-        System.out.println("Test " + (i + 1));
-        System.out.println("  GPA: " + gpas[i] + ", Tardies: " + tardies[i] + ", Detentions: " + detentions[i]);
-        System.out.println("  Expected: " + expects[i]);
-        System.out.println("  Received: " + received);
-        System.out.println();
-    }        
+        for (int i = 0; i < gpas.length; i++) {
+            String received = HonorRoll.awardQualifier(gpas[i], tardies[i], detentions[i]);
+            System.out.println("Test " + (i + 1));
+            System.out.println("  GPA: " + gpas[i] + ", Tardies: " + tardies[i] + ", Detentions: " + detentions[i]);
+            System.out.println("  Expected: " + expects[i]);
+            System.out.println("  Received: " + received);
+            System.out.println();
+        }        
     }
 
     /** COMPLETE THIS METHOD
@@ -67,7 +67,15 @@ public class HonorRoll {
      */
     public static String awardQualifier(double gpa, int tardies, int detentions) {
         // Insert your code below
-
-        return "";
+        if (gpa >= 3.5 && detentions == 0) {
+            if (tardies < 3) {
+                return "Honor Roll";
+            } else {
+                return "Merit List";
+            }
+        } else if (gpa >= 2.5 && gpa <= 3.49 && detentions < 2) {
+            return "Merit List";
+        }
+        return "No List";
     }
 }
