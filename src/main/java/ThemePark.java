@@ -1,7 +1,7 @@
 /** READ FIRST
  * You have been hired by a theme park to write a program that checks 
  * whether a visitor is eligible to go on certain rides. The eligibility 
- * depends on the visitor’s age, height, and special conditions like 
+ * depends on the visitor's age, height, and special conditions like 
  * having a VIP pass, a parent/guardian, or a younger sibling.
  * 
  * Ride Rules
@@ -23,7 +23,23 @@
 
 public class ThemePark {
     public static void main(String[] args) {
+        // Test cases for Extreme Coaster
+        System.out.println("Extreme Coaster Tests:");
+        System.out.println("16 years, 62 inches, no VIP: " + canRideExtremeCoaster(16, 62, false));  // true
+        System.out.println("14 years, 56 inches, with VIP: " + canRideExtremeCoaster(14, 56, true)); // true
+        System.out.println("14 years, 62 inches, no VIP: " + canRideExtremeCoaster(14, 62, false));  // false
         
+        // Test cases for Family River
+        System.out.println("\nFamily River Tests:");
+        System.out.println("9 years, 42 inches, no parent: " + canRideFamilyRiver(9, 42, false));    // true
+        System.out.println("7 years, 42 inches, with parent: " + canRideFamilyRiver(7, 42, true));   // true
+        System.out.println("7 years, 42 inches, no parent: " + canRideFamilyRiver(7, 42, false));    // false
+        
+        // Test cases for Kiddie Carousel
+        System.out.println("\nKiddie Carousel Tests:");
+        System.out.println("11 years, no sibling: " + canRideKiddieCarousel(11, false));             // true
+        System.out.println("13 years, with sibling: " + canRideKiddieCarousel(13, true));            // true
+        System.out.println("13 years, no sibling: " + canRideKiddieCarousel(13, false));             // false
     }
 
     /** COMPLETE THIS METHOD
@@ -38,8 +54,11 @@ public class ThemePark {
      */
     public static boolean canRideExtremeCoaster(int age, double height, boolean hasVIP) {
         // Insert your code below
-
-        return false;
+        if (hasVIP) {
+            return age >= 14 && height >= 55;
+        } else {
+            return age >= 16 && height >= 60;
+        }
     }
 
     /** COMPLETE THIS METHOD
@@ -54,8 +73,13 @@ public class ThemePark {
      */
     public static boolean canRideFamilyRiver(int age, double height, boolean withParent) {
         // Insert your code below
-
-        return false;
+        if (height < 40) {
+            return false;
+        }
+        if (age >= 8) {
+            return true;
+        }
+        return withParent;
     }
 
     /** COMPLETE THIS METHOD
@@ -69,7 +93,9 @@ public class ThemePark {
      */
     public static boolean canRideKiddieCarousel(int age, boolean withSiblingUnder12) {
         // Insert your code below
-
-        return false;
+        if (age < 12) {
+            return true;
+        }
+        return withSiblingUnder12;
     }
 }
